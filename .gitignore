@@ -1,1 +1,39 @@
 dev_roadmap.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+.venv/
+venv/
+
+# Build (scikit-build-core / CMake)
+build/
+dist/
+_skbuild/
+*.egg-info/
+CMakeCache.txt
+CMakeFiles/
+compile_commands.json
+
+# Test / profiling caches
+.pytest_cache/
+.benchmarks/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+htmlcov/
+profile.json
+
+# pyside6-deploy / Nuitka
+deployment/
+*.build/
+*.dist/
+pysidedeploy.spec
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/

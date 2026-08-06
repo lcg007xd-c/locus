@@ -1,0 +1,39 @@
+[project]
+name = "locus"
+version = "0.1.0"
+description = "Native desktop mathematics visualizer"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "hypothesis>=6.165.2",
+    "lark>=1.3.1",
+    "mypy>=2.3.0",
+    "numpy>=2.5.1",
+    "pybind11>=3.0.4",
+    "pyopengl>=3.1.10",
+    "pyqtgraph>=0.14.0",
+    "pyside6>=6.11.1",
+    "pytest>=9.1.1",
+    "pytest-benchmark>=5.2.3",
+    "pytest-qt>=4.5.0",
+    "ruff>=0.16.1",
+    "scikit-build-core>=1.0.3",
+    "scipy>=1.18.0",
+    "sympy>=1.14.0",
+]
+
+[dependency-groups]
+dev = [
+    "cmake>=4.4.2",
+    "ninja>=1.13.0",
+    "nuitka>=4.1.3",
+    "py-spy>=0.4.2",
+]
+
+[build-system]
+requires = ["scikit-build-core>=1.0.3", "pybind11>=3.0.4"]
+build-backend = "scikit_build_core.build"
+
+[tool.scikit-build]
+cmake.build-type = "Release"
+sdist.include = ["CMakeLists.txt", "cpp/"]
