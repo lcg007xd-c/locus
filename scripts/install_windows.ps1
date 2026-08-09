@@ -75,6 +75,9 @@ if (Assert-Command "uv") {
 }
 
 Step "Step 5/5: installing Python dependencies and building the C++ extension"
+# The bundled MinGW cmake has no CA bundle, so the Eigen FetchContent download
+# from gitlab.com fails TLS verification. CMake suggests CMAKE_TLS_VERIFY=0.
+$env:CMAKE_TLS_VERIFY = "0"
 uv sync --editable
 
 Write-Host ""
