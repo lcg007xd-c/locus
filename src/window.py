@@ -2,20 +2,19 @@ from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QP
 from PySide6.QtCore import Qt
 import sys
 from time import sleep 
-
-
-
+from random import randint
+import re
 
 
 class MainWindow(QMainWindow):
-    
+      
     def __init__(self):
 
         super().__init__()
-
+        
         self.setWindowTitle("Window thingy")
         self.resize(500,300)
-
+    
         whole = QWidget()
         self.setCentralWidget(whole)
 
@@ -27,30 +26,89 @@ class MainWindow(QMainWindow):
      
         top = QHBoxLayout(topContainer)
         middle = QHBoxLayout(middleConatiner)
-        bottom = QHBoxLayout(bottomContainer)
-       
+        bottom = QVBoxLayout(bottomContainer)
+
         layout.addWidget(topContainer)
         layout.addWidget(middleConatiner)
         layout.addWidget(bottomContainer)
 
-        label1 = QLabel("This says somehtingg")
-        label1.setAlignment(Qt.AlignCenter)
-        top.addWidget(label1)
+        self.label1 = QLabel("[Your function]")
+        self.label1.setAlignment(Qt.AlignCenter)
+        top.addWidget(self.label1)
 
 
-        labelm = QLabel("Input function: ")
+        labelm = QLabel("f(x) =")
         middle.addWidget(labelm)
-        input = QLineEdit()
-        middle.addWidget(input)
+
+        self.input = QLineEdit()
+        self.input.returnPressed.connect(self.validate_expression)
+        middle.addWidget(self.input)
 
         button = QPushButton("Submit")
-        function = button.clickedk.connect()
+        bottom.addWidget(button, alignment=Qt.AlignCenter)
+        button.setFixedWidth(100)
+
+
+        button1 = QPushButton("Submit")
+        bottom.addWidget(button1, alignment=Qt.AlignCenter)
+        button1.setFixedWidth(100)
+        button1.clicked.connect(lambda: print(self.expression))
+
         
-        bottom.addWidget(button)
+        button.clicked.connect(self.validate_expression)
 
-    def recity(self, func):
-        ...
+        self.expression = ""
+        
+    def validate_expression(self):
 
+        expression = self.input.text().strip()
+        self.label1.setStyleSheet("color: white")
+
+        if not expression:
+            self.label1.setStyleSheet("color: red")
+            self.label1.setText("Enter your function")
+            return
+
+        allowed_names = {
+            "x",
+            "e",
+            "pi",
+            "sin",
+            "cos",
+            "tan",
+            "sqrt",
+            "log",
+            "ln",
+            "abs",
+        }
+
+        errors = []
+
+        # Find all names made from letters
+        names = re.findall(r"[A-Za-z]+", expression)
+
+        for name in names:
+            if name not in allowed_names:
+                errors.append(name)
+
+        # Remove valid names, then validate the remaining symbols
+        expression_without_names = re.sub(r"[A-Za-z]+", "", expression)
+
+        allowed_characters = set("0123456789+-*/^(). ")
+
+        for character in expression_without_names:
+            if character not in allowed_characters:
+                errors.append(character)
+
+        if errors:
+            self.label1.setStyleSheet("color: red")
+            self.label1.setText(
+                f"Error\n{errors} not valid"
+            )
+            return
+
+        self.expression = expression
+        self.label1.setText(self.expression)
         
 
 
@@ -62,11 +120,12 @@ def main():
     window = MainWindow()
     window.show()
 
+    print("a")
+    print(window.x)
+    print("b")
 
-    
     sys.exit(app.exec())
-    print("blablabla")
-    
-
+   
+  
 if __name__ == "__main__":
     main()
