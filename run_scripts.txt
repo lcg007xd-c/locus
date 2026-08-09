@@ -1,0 +1,12 @@
+Run scripts
+===========
+
+Linux (bash):
+    bash scripts/install_linux.sh
+
+Windows 11 (PowerShell, right-click "Run as administrator" or from terminal):
+    powershell -ExecutionPolicy Bypass -File scripts\install_windows.ps1
+
+Run the app afterwards:
+    Linux:   uv run python src/main.py
+    Windows: uv run python src\main.py
